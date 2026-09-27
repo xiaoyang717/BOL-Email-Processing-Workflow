@@ -3,7 +3,7 @@
 ## 平台与身份
 
 - 平台：bol.com（荷兰）
-- 卖家 / 品牌：Windvogel（partner from bol）
+- 卖家 / 品牌：***（partner from bol）
 - 运营者：SHOKO，跨境电商运营，日常用荷兰语回复顾客。
 
 ## 主营品类
