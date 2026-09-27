@@ -1,0 +1,32 @@
+# ---- 编辑器 / 系统 ----
+.DS_Store
+Thumbs.db
+desktop.ini
+__pycache__/
+*.pyc
+*.pyo
+
+# ---- 本地工作区运行时数据（不入库）----
+.workbuddy/
+.openclaw/
+sessions/
+memory/
+.consolidate-state.json
+_docx_text.txt
+_build_repo.py
+
+# ---- 与本项目无关的其他工作产物 ----
+AI科技日报*.md
+ai_daily_brief_*.md
+ai_tech_daily*.md
+日报_*.docx
+日报生成器说明_*.md
+analyze_profit.py
+daily_report_app.py
+generate_demo.py
+inspect_xlsx.py
+make_ppt.js
+BOL_Seller_Memory_Archive.docx
+
+# ---- 历史草稿：只保留精选样本，散落在根目录的旧草稿不入库 ----
+/bol-klantenservice-email_*.md

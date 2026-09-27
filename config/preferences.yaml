@@ -1,0 +1,52 @@
+output:
+  language: nl-NL
+  format: email_body_only
+  exclude_greeting: true
+  exclude_signature: true
+  exclude_closing_paragraph: false
+  tone: bol_official
+
+tone_rules:
+  default: bol_official
+  logistics_delay_pickup_reminder: soft_reminder
+  dispute_complaint: ultra_official
+
+expansion_policy:
+  allow_rewrite: true
+  allow_continuation: true
+  constraint: original_meaning_must_not_deviate
+  constraint: must_not_violate_bol_regulations
+  principle: appropriately_expand_to_make_email_complete_and_natural
+
+format_rules:
+  line_break_after_each_sentence_or_paragraph: true
+  no_chinese_characters_in_output: true
+  no_greeting: true
+  no_signature: true
+  no_proactive_notification_promise: true
+
+refund_policy:
+  before_refund: ask_customer_preference_refund_or_reship
+  exception: damaged_on_first_use -> direct_refund
+  exception: wall_panel_dent_non_recoverable -> direct_refund
+  exception: product_not_received_confirmed_lost -> direct_refund
+  exception: product_not_as_described -> direct_refund_without_return
+  goodwill: may_refund_more_than_actual_loss_as_compensation
+
+address_change:
+  after_handover_to_carrier: cannot_modify
+  alternative: offer_refund_if_customer_cannot_receive
+
+return_dispute:
+  evidence_required: shipping_proof_or_pre_shipment_photo_or_carrier_confirmation
+  weight_evidence: carrier_recorded_weight_as_proof
+  photo_evidence: customer_photos_may_be_insufficient
+  escalation: proactively_submit_to_bol_official_for_adjudication
+
+urls:
+  dhl_track_and_trace: https://www.dhlecommerce.nl/nl/consument/track-en-trace
+  dhl_chat: https://my.dhlecommerce.nl/home/more/chat
+
+draft_convention:
+  filename: bol-klantenservice-email_YYYYMMDD_HHMMSS.md
+  directory: drafts/
