@@ -8,12 +8,6 @@
 
 ## 主营品类
 
-- Zelfklevend 3D Wandpaneel（自粘 3D 墙板）—— 主力产品
-- Horloge reparatie gereedschap（修表工具）
-- Whiteboard markers（白板笔）
-- Ballet shoes（芭蕾舞鞋）
-- Toilet brush（马桶刷）
-- Bags（袋类）
 - 其他家居杂项（门帘、纱窗、冷泡壶、储物罐、抱枕、口罩等）
 
 ## 物流
