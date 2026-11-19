@@ -1,51 +1,153 @@
+input:
+  customer_message_only_allowed: true
+  seller_decision_optional: true
+  legacy_q_a_supported: true
+  require_q_a_labels: false
+
 output:
   language: nl-NL
-  format: email_body_only
+  analysis_language: zh-CN
+  format: chinese_analysis_options_then_dutch_safe_draft
+  body_only_when:
+    - explicit_final_or_body_only_request
+    - explicit_chinese_seller_decision_including_legacy_a
+  body_only_excludes: chinese_analysis_titles_translation_and_code_fences
   exclude_greeting: true
   exclude_signature: true
   exclude_closing_paragraph: false
   tone: bol_official
+
+interaction:
+  undecided_response_order:
+    - chinese_customer_needs_summary
+    - known_facts_with_sources_and_items_to_verify
+    - two_or_three_applicable_options_with_recommendation_reason_conditions_and_authorization
+    - safe_nl_NL_draft_without_unapproved_commitments
+  iterative_revision: true
+  reuse_confirmed_context: true
+  repeat_requests_for_provided_information: false
+  ask_only_material_missing_information: true
+  draft_even_when_decision_is_missing: true
+  final_request_does_not_confirm_execution: true
+  distinguish_customer_report_seller_confirmation_and_tracking_record: true
 
 tone_rules:
   default: bol_official
   logistics_delay_pickup_reminder: soft_reminder
   dispute_complaint: ultra_official
 
+knowledge:
+  references:
+    - knowledge/MEMORY.md
+    - knowledge/RECENT_EXPERIENCE_2026-11-19.md
+  priority: current_explicit_instruction_and_verified_facts_then_current_interaction_rules_and_recent_safety_boundaries_then_older_experience
+  historical_cases_are_current_facts: false
+  historical_cases_are_platform_policy: false
+  unavailable_reference: disclose_and_do_not_claim_review
+
 expansion_policy:
   allow_rewrite: true
   allow_continuation: true
-  constraint: original_meaning_must_not_deviate
-  constraint: must_not_violate_bol_regulations
+  constraints:
+    - original_meaning_must_not_deviate
+    - must_not_violate_verified_applicable_bol_regulations
+    - no_invented_facts_or_unauthorized_commitments
   principle: appropriately_expand_to_make_email_complete_and_natural
 
 format_rules:
+  scope: dutch_email_body_only_not_chinese_analysis
   line_break_after_each_sentence_or_paragraph: true
   no_chinese_characters_in_output: true
   no_greeting: true
   no_signature: true
   no_proactive_notification_promise: true
+  proactive_notification_exception: explicit_seller_authorization_for_this_notification
+  closing: Mocht u nog vragen hebben, neem dan gerust contact met ons op.
+
+authorization:
+  recommendation_is_decision: false
+  decision_is_execution: false
+  customer_request_is_seller_authorization: false
+  completed_action_wording_requires: explicit_seller_confirmation_of_execution_in_current_case
+  authorized_but_not_executed_wording: future_or_conditional_within_authorized_scope
+  unapproved_action_wording: acknowledgement_and_necessary_questions_without_commitment
+  seller_approval_required_for:
+    - refund
+    - reshipment
+    - goodwill_compensation
+    - no_return_required
+    - carrier_complaint_or_bol_escalation
+    - carrier_inquiry_or_reminder
+    - proactive_customer_notification
+    - address_change
+    - attachment_claim
 
 refund_policy:
-  before_refund: ask_customer_preference_refund_or_reship
-  exception: damaged_on_first_use -> direct_refund
-  exception: wall_panel_dent_non_recoverable -> direct_refund
-  exception: product_not_received_confirmed_lost -> direct_refund
-  exception: product_not_as_described -> direct_refund_without_return
-  goodwill: may_refund_more_than_actual_loss_as_compensation
+  before_refund: suggest_customer_preference_refund_or_reship_when_applicable_and_seller_authorized
+  direct_refund_recommendation_cases:
+    - damaged_on_first_use
+    - wall_panel_dent_non_recoverable
+    - product_not_received_confirmed_lost
+    - product_not_as_described
+    - confirmed_damage
+  direct_refund_requires_seller_authorization: true
+  no_return_requires_separate_seller_authorization: true
+  goodwill: recommend_only_with_seller_approval_for_amount_and_scope
+  completed_refund_wording_requires: explicit_seller_confirmation_refund_processed
+  arrival_time: only_with_current_case_basis_and_payment_status
+  postpay: no_automatic_bank_account_arrival_promise
+
+logistics:
+  distinguish_label_created_from_carrier_handover: true
+  delivered_scan_is_confirmed_customer_receipt: false
+  update_time_is_delivery_time: false
+  confirmed_loss_requires: current_case_confirmation
+  delivery_estimate_requires: current_case_basis_and_expectation_wording_not_guarantee
+  tracking_number_requires: verified_current_case_number
+  carrier: use_verified_actual_carrier_do_not_default_to_dhl
 
 address_change:
-  after_handover_to_carrier: cannot_modify
-  alternative: offer_refund_if_customer_cannot_receive
+  after_handover_to_carrier: do_not_assume_change_is_possible
+  completed_change_wording_requires: explicit_seller_confirmation_of_success
+  alternative: recommend_refund_only_subject_to_seller_authorization
 
 return_dispute:
-  evidence_required: shipping_proof_or_pre_shipment_photo_or_carrier_confirmation
-  weight_evidence: carrier_recorded_weight_as_proof
-  photo_evidence: customer_photos_may_be_insufficient
-  escalation: proactively_submit_to_bol_official_for_adjudication
+  evidence_required: ask_only_missing_relevant_shipping_proof_photos_or_carrier_confirmation
+  weight_evidence: verified_carrier_weight_does_not_alone_prove_exact_item_count
+  photo_evidence: assess_current_case_do_not_copy_historical_conclusions
+  no_tracking: does_not_prove_not_shipped_or_lost
+  escalation: recommend_bol_adjudication_only_with_seller_authorization
+  completed_escalation_wording_requires: explicit_seller_confirmation_submitted
 
 urls:
   dhl_track_and_trace: https://www.dhlecommerce.nl/nl/consument/track-en-trace
   dhl_chat: https://my.dhlecommerce.nl/home/more/chat
+
+execution:
+  send_email: false
+  process_refund: false
+  arrange_reshipment: false
+  submit_complaint: false
+  query_backend: false
+  automatic_model_calls_or_switching: false
+
+scripts:
+  dependencies: python_standard_library_only
+  new_draft: archive_user_provided_body_only_no_generation_or_model_calls
+  check_draft: limited_dutch_body_format_and_keyword_checks_only
+  checks_factual_accuracy: false
+  checks_authorization_or_execution: false
+  checks_platform_policy: false
+  checks_entire_chinese_analysis: false
+  human_review_required: true
+
+privacy:
+  default_storage: local_only
+  upload_requires: current_explicit_user_authorization_for_object_scope_and_destination
+  redact_before_upload: true
+  private_repository_allows_unredacted_upload: false
+  historical_upload_authorization_is_reusable: false
+  automatic_git_commit_or_push: false
 
 draft_convention:
   filename: bol-klantenservice-email_YYYYMMDD_HHMMSS.md
