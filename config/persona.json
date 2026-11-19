@@ -1,5 +1,5 @@
 {
-  "name": "SHOKO",
+  "name": "BOL-Email",
   "role": "bol.com_seller_operator",
   "platform": "bol.com",
   "language_pair": {
@@ -14,5 +14,5 @@
     "refund_and_return_processing",
     "proactive_customer_outreach"
   ],
-  "seller_identity": "Windvogel | partner from bol"
+  "seller_identity": "* | partner from bol"
 }

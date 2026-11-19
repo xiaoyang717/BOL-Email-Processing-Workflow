@@ -3,17 +3,11 @@
 ## 平台与身份
 
 - 平台：bol.com（荷兰）
-- 卖家 / 品牌：Windvogel（partner from bol）
-- 运营者：SHOKO，跨境电商运营，日常用荷兰语回复顾客。
+- 卖家 / 品牌：***（partner from bol）
+- 运营者：跨境电商运营，日常用荷兰语回复顾客。
 
 ## 主营品类
 
-- Zelfklevend 3D Wandpaneel（自粘 3D 墙板）—— 主力产品
-- Horloge reparatie gereedschap（修表工具）
-- Whiteboard markers（白板笔）
-- Ballet shoes（芭蕾舞鞋）
-- Toilet brush（马桶刷）
-- Bags（袋类）
 - 其他家居杂项（门帘、纱窗、冷泡壶、储物罐、抱枕、口罩等）
 
 ## 物流
